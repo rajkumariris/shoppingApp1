@@ -1,16 +1,27 @@
 package dev.raj.projectstart.services;
 
 import dev.raj.projectstart.dtos.ProductDto;
+import dev.raj.projectstart.models.Product;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 public interface ProductService {
 
 
-    public String getAllProducts();
+    List<Product> getAllProducts();
 
-    public String AddProduct(ProductDto productdto);
+    Product  getSingleProduct(Long productId);
 
-    public String updateProduct(Long productId);
+    public String AddProduct(
+            String title,
+            double price,
+            String description,
+            String category,
+            String imageUrl
+
+    );
+    public String updateProduct(Long productId, Product product);
 
     public String Delete(Long productId);
 

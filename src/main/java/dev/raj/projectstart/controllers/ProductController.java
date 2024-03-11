@@ -1,6 +1,7 @@
 package dev.raj.projectstart.controllers;
 
 import dev.raj.projectstart.dtos.ProductDto;
+import dev.raj.projectstart.dtos.getSingleProductResponseDto;
 import dev.raj.projectstart.services.ProductService;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,12 +16,17 @@ public class ProductController {
     }
     @GetMapping("/products")
     public String getAllProducts(){
-        return "giving all products";
+        return "get all";
     }
 
     @GetMapping("/products/{productId}")
-    public String getSingleProduct(@PathVariable("productId") Long productId ){
-        return "returning Singel product" +productId;
+    public getSingleProductResponseDto getSingleProduct(@PathVariable("productId") Long productId, ProductDto productdto ){
+
+        getSingleProductResponseDto singleResponse = new getSingleProductResponseDto();
+        singleResponse.setProduct(
+                productservice.getSingleProduct(productId)
+        );
+       return singleResponse;
     }
 
     @PostMapping("/products")
