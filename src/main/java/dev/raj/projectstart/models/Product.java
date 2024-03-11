@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Product extends  BaseProduct{
-    private String name;
+    private Long Id;
     private int price;
     private String Title;
     private String description;
