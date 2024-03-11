@@ -2,8 +2,15 @@ package dev.raj.projectstart.controllers;
 
 import dev.raj.projectstart.dtos.ProductDto;
 import dev.raj.projectstart.dtos.getSingleProductResponseDto;
+import dev.raj.projectstart.models.Product;
 import dev.raj.projectstart.services.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 
 @RestController
 
@@ -20,13 +27,28 @@ public class ProductController {
     }
 
     @GetMapping("/products/{productId}")
-    public getSingleProductResponseDto getSingleProduct(@PathVariable("productId") Long productId, ProductDto productdto ){
+    public ResponseEntity<Product> getSingleProduct(@PathVariable("productId") Long productId, ProductDto productdto ){
 
-        getSingleProductResponseDto singleResponse = new getSingleProductResponseDto();
-        singleResponse.setProduct(
-                productservice.getSingleProduct(productId)
+        MultiValueMap<String,String> headers = new LinkedMultiValueMap<>();
+
+        headers.add(
+                "auth-token","noaccess4auheyhey"
         );
-       return singleResponse;
+        ResponseEntity<Product> response = new ResponseEntity(
+                productservice.getSingleProduct(productId),
+                headers,
+                HttpStatus.NOT_FOUND
+
+        );
+//        getSingleProductResponseDto singleResponse = new getSingleProductResponseDto();
+//        singleResponse.setProduct(
+//                productservice.getSingleProduct(productId)
+//        );
+
+
+
+
+       return response;
     }
 
     @PostMapping("/products")

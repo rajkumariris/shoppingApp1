@@ -40,6 +40,7 @@ public class FakeStoreProductimpl implements ProductService {
         product.setCatagory(catagory);
         product.setImageUrl(productDto.getImage());
 
+
         return product;
     }
 
