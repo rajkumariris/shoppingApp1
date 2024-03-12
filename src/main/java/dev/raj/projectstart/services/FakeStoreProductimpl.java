@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -30,11 +31,15 @@ public class FakeStoreProductimpl implements ProductService {
         List<Product> answer = new ArrayList<>();
 
         for(Object object: l.getBody()){
-            ProductDto productDto = (ProductDto) object;
-            Product product = new Product();
-            product.setId(productDto.getId());
-            product.setTitle(productDto.getTitle());
+            HashMap<String,Object>  hm = (HashMap<String, Object>) object;
 
+            Product product = new Product();
+            product.setId((Long)hm.get("Id"));
+            product.setTitle((String)hm.get("title"));
+            product.setDescription((String) hm.get("description"));
+            Catagories catagories = new Catagories();
+            catagories.setName((String)hm.get("category"));
+            product.setImageUrl((String)hm.get("image"));
             answer.add(product);
         }
 
