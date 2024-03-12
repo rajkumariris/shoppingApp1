@@ -9,6 +9,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 
 public class ProductController {
@@ -19,8 +21,9 @@ public class ProductController {
         this.productservice = productservice;
     }
     @GetMapping("/products")
-    public String getAllProducts(){
-        return "get all";
+    public List<Product> getAllProducts(){
+
+        return productservice.getAllProducts();
     }
 
     @GetMapping("/products/{productId}")

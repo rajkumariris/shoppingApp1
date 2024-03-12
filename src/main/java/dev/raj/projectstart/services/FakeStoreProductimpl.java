@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -21,7 +22,23 @@ public class FakeStoreProductimpl implements ProductService {
     }
     @Override
     public List<Product> getAllProducts() {
-        return null;
+        RestTemplate restTemplate = resttemplatebuilder.build();
+        ResponseEntity<List> l =  restTemplate.getForEntity("https://fakestoreapi.com/products",
+                List.class
+                );
+
+        List<Product> answer = new ArrayList<>();
+
+        for(Object object: l.getBody()){
+            ProductDto productDto = (ProductDto) object;
+            Product product = new Product();
+            product.setId(productDto.getId());
+            product.setTitle(productDto.getTitle());
+
+            answer.add(product);
+        }
+
+        return answer;
     }
 
     @Override
