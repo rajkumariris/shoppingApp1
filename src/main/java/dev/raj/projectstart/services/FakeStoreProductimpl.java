@@ -45,14 +45,33 @@ public class FakeStoreProductimpl implements ProductService {
     }
 
     @Override
-    public String AddProduct(
-            String title,
-            double price,
-            String description,
-            String category,
-            String imageUrl
+    public Product AddProduct(
+
+//            String title,
+//            double price,
+//            String description,
+//            String category,
+//            String imageUrl,
+            ProductDto product
     ) {
-        return null;
+        RestTemplate restTemplate = resttemplatebuilder.build();
+       ResponseEntity<ProductDto> responseEntity=   restTemplate.postForEntity("https://fakestoreapi.com/products",
+                product,
+                ProductDto.class);
+
+       ProductDto productdto = responseEntity.getBody();
+
+       Product prod = new Product();
+       prod.setId(productdto.getId());
+       prod.setDescription(productdto.getDescription());
+       prod.setTitle(productdto.getTitle());
+       prod.setPrice(productdto.getPrice());
+       Catagories catagory = new Catagories();
+       catagory.setName(productdto.getCatagory());
+       prod.setImageUrl(productdto.getImage());
+
+
+        return prod;
     }
 
     @Override

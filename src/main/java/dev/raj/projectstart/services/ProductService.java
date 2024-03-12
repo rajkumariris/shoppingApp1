@@ -13,12 +13,14 @@ public interface ProductService {
 
     Product  getSingleProduct(Long productId);
 
-    public String AddProduct(
-            String title,
-            double price,
-            String description,
-            String category,
-            String imageUrl
+    public Product AddProduct(
+
+//            String title,
+//            double price,
+//            String description,
+//            String category,
+//            String imageUrl
+            ProductDto product
 
     );
     public String updateProduct(Long productId, Product product);
