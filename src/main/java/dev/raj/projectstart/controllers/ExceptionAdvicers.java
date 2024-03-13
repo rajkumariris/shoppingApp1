@@ -9,5 +9,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class ExceptionAdvicers {
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> raj(Exception exception){
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto();
+        errorResponseDto.setErrorResponse(exception.getMessage());
 
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.NOT_FOUND);
+    }
 }

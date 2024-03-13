@@ -90,12 +90,6 @@ public class ProductController {
         return " Deleted Product"+ productId;
     }
 
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ErrorResponseDto> raj(Exception exception){
-        ErrorResponseDto errorResponseDto = new ErrorResponseDto();
-        errorResponseDto.setErrorResponse(exception.getMessage());
 
-        return new ResponseEntity<>(errorResponseDto, HttpStatus.NOT_FOUND);
-    }
 
 }
