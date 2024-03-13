@@ -1,6 +1,8 @@
 package dev.raj.projectstart.controllers;
 
+import dev.raj.projectstart.dtos.ErrorResponseDto;
 import dev.raj.projectstart.dtos.ProductDto;
+import dev.raj.projectstart.exceptions.NotFoundException;
 import dev.raj.projectstart.models.Catagories;
 import dev.raj.projectstart.models.Product;
 import dev.raj.projectstart.services.ProductService;
@@ -11,6 +13,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 
@@ -28,15 +31,22 @@ public class ProductController {
     }
 
     @GetMapping("/products/{productId}")
-    public ResponseEntity<Product> getSingleProduct(@PathVariable("productId") Long productId, ProductDto productdto ){
+    public ResponseEntity<Product> getSingleProduct(@PathVariable("productId") Long productId, ProductDto productdto ) throws  NotFoundException{
 
         MultiValueMap<String,String> headers = new LinkedMultiValueMap<>();
 
         headers.add(
                 "auth-token","noaccess4auheyhey"
         );
+
+        Optional<Product> productOptional = productservice.getSingleProduct(productId);
+          if(productOptional.isEmpty()){
+              throw new NotFoundException("No Product with"+ productId);
+          }
+
+
         ResponseEntity<Product> response = new ResponseEntity(
-                productservice.getSingleProduct(productId).get(),
+                productservice.getSingleProduct(productId),
                 headers,
                 HttpStatus.NOT_FOUND
 
@@ -79,4 +89,13 @@ public class ProductController {
     public String Delete(@PathVariable("productId") Long productId){
         return " Deleted Product"+ productId;
     }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> raj(Exception exception){
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto();
+        errorResponseDto.setErrorResponse(exception.getMessage());
+
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.NOT_FOUND);
+    }
+
 }
