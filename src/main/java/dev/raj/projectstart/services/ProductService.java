@@ -6,13 +6,14 @@ import dev.raj.projectstart.models.Product;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductService {
 
 
     List<Product> getAllProducts();
 
-    Product  getSingleProduct(Long productId);
+    Optional<Product>  getSingleProduct(Long productId);
 
     public Product AddProduct(
 

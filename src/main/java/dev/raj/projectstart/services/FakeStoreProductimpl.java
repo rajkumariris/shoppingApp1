@@ -67,12 +67,16 @@ public class FakeStoreProductimpl implements ProductService {
     }
 
     @Override
-    public Product getSingleProduct(Long productId) {
+    public Optional<Product> getSingleProduct(Long productId) {
 
         RestTemplate restTemple = resttemplatebuilder.build();
         ResponseEntity<FakeStoreProductDto> response =  restTemple.getForEntity("https://fakestoreapi.com/products/{id}", FakeStoreProductDto.class, productId);
         FakeStoreProductDto productDto = response.getBody();
-        return converttoProduct(productDto);
+
+        if(productDto ==null){
+            return Optional.empty();
+        }
+        return Optional.of(converttoProduct(productDto));
 
     }
 

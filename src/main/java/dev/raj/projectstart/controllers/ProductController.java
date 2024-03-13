@@ -36,7 +36,7 @@ public class ProductController {
                 "auth-token","noaccess4auheyhey"
         );
         ResponseEntity<Product> response = new ResponseEntity(
-                productservice.getSingleProduct(productId),
+                productservice.getSingleProduct(productId).get(),
                 headers,
                 HttpStatus.NOT_FOUND
 
