@@ -8,6 +8,7 @@ import jdk.jfr.Category;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RequestCallback;
@@ -28,7 +29,9 @@ public class FakeStoreProductimpl implements ProductService {
 
     private  <T> ResponseEntity<T> requestForEntity(HttpMethod httpMethod, String url, @Nullable Object request,
                                                     Class<T> responseType, Object... uriVariables) throws RestClientException {
-        RestTemplate restTemplate = resttemplatebuilder.build();
+        RestTemplate restTemplate = resttemplatebuilder.requestFactory(
+            HttpComponentsClientHttpRequestFactory.class
+        ).build();
 
         RequestCallback requestCallback = restTemplate.httpEntityCallback(request, responseType);
         ResponseExtractor<ResponseEntity<T>> responseExtractor = restTemplate.responseEntityExtractor(responseType);
@@ -112,7 +115,7 @@ public class FakeStoreProductimpl implements ProductService {
         fakeStoreProductDto.setTitle(product.getTitle());
         fakeStoreProductDto.setCatagory(product.getCatagory().getName());
 
-        requestForEntity(
+        ResponseEntity<FakeStoreProductDto> fakeStoreProductDtoResponseEntity= requestForEntity(
                 HttpMethod.PATCH,
                 "https://fakestoreapi.com/products/{id}",
                 fakeStoreProductDto,
@@ -120,7 +123,7 @@ public class FakeStoreProductimpl implements ProductService {
                 productId
                 );
 
-        return converttoProduct(fakeStoreProductDto);
+        return converttoProduct(fakeStoreProductDtoResponseEntity.getBody());
     }
 
    public String replaceProduct(Long productId, Product product){
