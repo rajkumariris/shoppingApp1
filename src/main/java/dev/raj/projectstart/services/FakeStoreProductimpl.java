@@ -6,14 +6,16 @@ import dev.raj.projectstart.models.Catagories;
 import dev.raj.projectstart.models.Product;
 import jdk.jfr.Category;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RequestCallback;
+import org.springframework.web.client.ResponseExtractor;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @Service
 public class FakeStoreProductimpl implements ProductService {
@@ -21,6 +23,16 @@ public class FakeStoreProductimpl implements ProductService {
 
     public FakeStoreProductimpl(RestTemplateBuilder restTemplateBuilder){
         this.resttemplatebuilder = restTemplateBuilder;
+    }
+
+
+    private  <T> ResponseEntity<T> requestForEntity(HttpMethod httpMethod, String url, @Nullable Object request,
+                                                    Class<T> responseType, Object... uriVariables) throws RestClientException {
+        RestTemplate restTemplate = resttemplatebuilder.build();
+
+        RequestCallback requestCallback = restTemplate.httpEntityCallback(request, responseType);
+        ResponseExtractor<ResponseEntity<T>> responseExtractor = restTemplate.responseEntityExtractor(responseType);
+        return restTemplate.execute(url, httpMethod, requestCallback, responseExtractor, uriVariables);
     }
     private Product converttoProduct(FakeStoreProductDto productDto)
     {
@@ -92,8 +104,27 @@ public class FakeStoreProductimpl implements ProductService {
     }
 
     @Override
-    public String updateProduct(Long productId, Product product) {
-        return null;
+    public Product updateProduct(Long productId, Product product) {
+
+        FakeStoreProductDto fakeStoreProductDto = new FakeStoreProductDto();
+        fakeStoreProductDto.setDescription(product.getDescription());
+        fakeStoreProductDto.setPrice(product.getPrice());
+        fakeStoreProductDto.setTitle(product.getTitle());
+        fakeStoreProductDto.setCatagory(product.getCatagory().getName());
+
+        requestForEntity(
+                HttpMethod.PATCH,
+                "https://fakestoreapi.com/products/{id}",
+                fakeStoreProductDto,
+                FakeStoreProductDto.class,
+                productId
+                );
+
+        return converttoProduct(fakeStoreProductDto);
+    }
+
+   public String replaceProduct(Long productId, Product product){
+        return "hi";
     }
 
     @Override

@@ -24,8 +24,8 @@ public interface ProductService {
             ProductDto product
 
     );
-    public String updateProduct(Long productId, Product product);
-
+    public Product updateProduct(Long productId, Product product);
+    public String replaceProduct(Long productId, Product product);
     public String Delete(Long productId);
 
 }
