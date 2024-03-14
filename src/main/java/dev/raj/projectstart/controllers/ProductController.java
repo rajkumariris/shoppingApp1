@@ -1,6 +1,5 @@
 package dev.raj.projectstart.controllers;
 
-import dev.raj.projectstart.dtos.ErrorResponseDto;
 import dev.raj.projectstart.dtos.ProductDto;
 import dev.raj.projectstart.exceptions.NotFoundException;
 import dev.raj.projectstart.models.Catagories;

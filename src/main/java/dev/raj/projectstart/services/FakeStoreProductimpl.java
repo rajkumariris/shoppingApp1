@@ -1,10 +1,10 @@
 package dev.raj.projectstart.services;
 
-import dev.raj.projectstart.dtos.FakeStoreProductDto;
+import dev.raj.projectstart.clients.Fakestoreapi.FakeStoreClient;
+import dev.raj.projectstart.clients.Fakestoreapi.FakeStoreProductDto;
 import dev.raj.projectstart.dtos.ProductDto;
 import dev.raj.projectstart.models.Catagories;
 import dev.raj.projectstart.models.Product;
-import jdk.jfr.Category;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +22,10 @@ import java.util.*;
 public class FakeStoreProductimpl implements ProductService {
     private RestTemplateBuilder resttemplatebuilder;
 
-    public FakeStoreProductimpl(RestTemplateBuilder restTemplateBuilder){
+    private FakeStoreClient fakeStoreClient;
+    public FakeStoreProductimpl(RestTemplateBuilder restTemplateBuilder, FakeStoreClient fakeStoreClient){
         this.resttemplatebuilder = restTemplateBuilder;
+        this.fakeStoreClient = fakeStoreClient;
     }
 
 
@@ -52,13 +54,10 @@ public class FakeStoreProductimpl implements ProductService {
     }
     @Override
     public List<Product> getAllProducts() {
-        RestTemplate restTemplate = resttemplatebuilder.build();
-        ResponseEntity<FakeStoreProductDto[]> l =  restTemplate.getForEntity("https://fakestoreapi.com/products",
-                FakeStoreProductDto[].class
-                );
+        List<FakeStoreProductDto> fakeStoreProductDtos = fakeStoreClient.getAllProducts();
         List<Product> answer = new ArrayList<>();
 
-        for(FakeStoreProductDto productDto : l.getBody()){
+        for(FakeStoreProductDto productDto : fakeStoreProductDtos){
 
             Product product = converttoProduct(productDto);
             answer.add(product);

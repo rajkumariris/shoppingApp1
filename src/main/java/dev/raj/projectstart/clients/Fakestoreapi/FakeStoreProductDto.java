@@ -1,5 +1,6 @@
-package dev.raj.projectstart.dtos;
+package dev.raj.projectstart.clients.Fakestoreapi;
 
+import dev.raj.projectstart.dtos.RatingDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
