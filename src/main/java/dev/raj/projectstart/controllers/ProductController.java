@@ -4,6 +4,7 @@ import dev.raj.projectstart.dtos.ProductDto;
 import dev.raj.projectstart.exceptions.NotFoundException;
 import dev.raj.projectstart.models.Catagories;
 import dev.raj.projectstart.models.Product;
+import dev.raj.projectstart.repositories.ProductRepository;
 import dev.raj.projectstart.services.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +20,10 @@ import java.util.Optional;
 public class ProductController {
 
     ProductService productservice;
-
-    public ProductController(ProductService productservice){
+    ProductRepository productrepo;
+    public ProductController(ProductService productservice,ProductRepository productrepo){
         this.productservice = productservice;
+        this.productrepo = productrepo;
     }
     @GetMapping("/products")
     public List<Product> getAllProducts(){
@@ -63,9 +65,17 @@ public class ProductController {
     @PostMapping("/products")
     public ResponseEntity<Product> AddProduct(@RequestBody ProductDto product){
 
-               Product newProduct =  productservice.AddProduct(
-                        product
-                );
+//               Product newProduct =  productservice.AddProduct(
+//                        product
+//                );
+
+        Product newProduct = new Product();
+        newProduct.setDescription(product.getDescription());
+        newProduct.setImageUrl(product.getImage());
+        newProduct.setTitle(product.getTitle());
+        newProduct.setPrice(product.getPrice());
+
+         productrepo.save(newProduct);
                ResponseEntity<Product> responseType = new ResponseEntity<>(
                        newProduct,HttpStatus.OK
                );
