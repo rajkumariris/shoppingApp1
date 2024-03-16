@@ -1,5 +1,7 @@
 package dev.raj.projectstart.models;
 
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 import lombok.*;
 
 import java.util.Date;
@@ -8,8 +10,10 @@ import java.util.Date;
 //@AllArgsConstructor
 //@NoArgsConstructor
 //@Builder
+@MappedSuperclass
 public class BaseProduct  {
-    private Long id;
+    @Id
+   private Long id;
     private Date createdAt;
     private Date LastUpdatedAt;
     private boolean IsDeleted;

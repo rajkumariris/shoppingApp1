@@ -43,7 +43,7 @@ public class FakeStoreProductimpl implements ProductService {
     private Product converttoProduct(FakeStoreProductDto productDto)
     {
         Product product = new Product();
-        product.setId(productDto.getId());
+       // product.setId(productDto.getId());
         product.setTitle(productDto.getTitle());
         product.setPrice(productDto.getPrice());
         Catagories catagory = new Catagories();
@@ -98,7 +98,7 @@ public class FakeStoreProductimpl implements ProductService {
        ProductDto productdto = responseEntity.getBody();
 
        Product prod = new Product();
-       prod.setId(productdto.getId());
+       //prod.setId(productdto.getId());
        prod.setDescription(productdto.getDescription());
        prod.setTitle(productdto.getTitle());
        prod.setPrice(productdto.getPrice());

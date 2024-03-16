@@ -75,7 +75,7 @@ public class ProductController {
     public Product updateProduct(@PathVariable("productId") Long productId,
                                     @RequestBody ProductDto productdto){
          Product product = new Product();
-         product.setId(productdto.getId());
+        // product.setId(productdto.getId());
          product.setCatagory(new Catagories());
          product.getCatagory().setName(productdto.getCatagory());
          product.setTitle(productdto.getTitle());
