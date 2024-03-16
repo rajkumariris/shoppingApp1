@@ -39,6 +39,7 @@ public class FakeStoreProductimpl implements ProductService {
         ResponseExtractor<ResponseEntity<T>> responseExtractor = restTemplate.responseEntityExtractor(responseType);
         return restTemplate.execute(url, httpMethod, requestCallback, responseExtractor, uriVariables);
     }
+
     private Product converttoProduct(FakeStoreProductDto productDto)
     {
         Product product = new Product();
