@@ -4,10 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SCMentorRepository extends JpaRepository<mentor, Long> {
+public interface SCMentorRepository extends JpaRepository<Mentor, Long> {
 
-    mentor save(mentor mentor);
+    Mentor save(Mentor mentor);
 
-    mentor findMentorBy(Long id);
+ //   Mentor findMentorBy(Long id);
 
 }

@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @DiscriminatorValue("3")
-public class mentor extends User {
+public class Mentor extends User {
   private  int NoofSessions;
   private  int NoOfMentees;
 }

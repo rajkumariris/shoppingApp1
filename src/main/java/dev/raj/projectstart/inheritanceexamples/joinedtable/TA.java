@@ -10,5 +10,5 @@ import lombok.Setter;
 @Entity(name="jt_TA")
 @PrimaryKeyJoinColumn(name="user_id")
 public class TA extends User {
-  private String averageRating;
+  private double averageRating;
 }

@@ -10,5 +10,5 @@ import lombok.Setter;
 @Entity
 @DiscriminatorValue("2")
 public class TA extends User {
-  private String averageRating;
+  private double averageRating;
 }
