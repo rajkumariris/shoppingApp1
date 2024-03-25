@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -64,9 +65,12 @@ public class ProductTest {
     @Test
     @Transactional
     void getAllproduct(){
-        Catagories catagory =  categoryRepository.findById(1L).get();
-        for(Product product : catagory.getProducts()){
-            System.out.println(product.getPrice());
+        List<Catagories> catagory =  categoryRepository.findAllByIdIn(List.of(1L,2L));
+        for(Catagories catagory1 : catagory){
+            for(Product product : catagory1.getProducts()){
+                System.out.println(product.getPrice());
+            }
+
         }
     }
 

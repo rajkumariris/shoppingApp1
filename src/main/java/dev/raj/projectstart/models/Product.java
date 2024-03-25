@@ -21,8 +21,7 @@ public class Product extends  BaseProduct{
     private int price;
     private String Title;
     private String description;
-    @ManyToOne(cascade={CascadeType.PERSIST},fetch = FetchType.LAZY)
-    @Fetch(FetchMode.SELECT)
+    @ManyToOne(cascade={CascadeType.PERSIST})
     private Catagories catagory;
     private String imageUrl;
 }
