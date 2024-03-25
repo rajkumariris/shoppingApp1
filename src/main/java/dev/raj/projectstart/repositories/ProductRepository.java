@@ -16,4 +16,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query(value=Queries.Laao_product_with_Id_query, nativeQuery = true)
     Product laaoProductwithId(Long Id);
+
+    @Query("select p from Product p where p.id= :id and p.catagory.name = :catagoryName")
+    public List<Product> getByIdAndName(Long id, String categoryName);
 }
