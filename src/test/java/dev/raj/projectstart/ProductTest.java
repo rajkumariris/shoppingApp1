@@ -73,5 +73,10 @@ public class ProductTest {
 
         }
     }
+    @Test
+    void demostrateProduct(){
+        List<Product> products = productrepository.getByIdAndName(1L,"hi");
+    }
+
 
 }
